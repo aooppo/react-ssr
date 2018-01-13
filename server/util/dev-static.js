@@ -4,6 +4,7 @@ const path = require('path')
 const MemoryFs = require('memory-fs')
 const ReactDomServer = require('react-dom/server')
 const proxy = require('http-proxy-middleware')
+
 const serverConfig = require('../../build/webpack.config.server')
 const getTemplate = () => {
 	return new Promise((resolve, reject)=> {
@@ -15,7 +16,6 @@ const getTemplate = () => {
 
 	})
 }
-
 
 const Module = module.constructor
 const mfs = new MemoryFs

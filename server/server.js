@@ -8,7 +8,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 if(!isDev) {
 	const template = fs.readFileSync(path.join(__dirname, '../dist/index.html'), 'utf8')
-	const serverEntry = require('../dist/server-entry').default 
+	const serverEntry = require('../dist/server-entry').default
 	app.use('/public', express.static(path.join(__dirname, '../dist')))
 	app.get('*', (req, res)=> {
 		let appString = ReactSSR.renderToString(serverEntry)
