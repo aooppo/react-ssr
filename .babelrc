@@ -6,6 +6,6 @@
 	],
 	"plugins" : [
     "transform-decorators-legacy",
-		"react-hot-loader/babel"
+    "react-hot-loader/babel"
 	]
 }
