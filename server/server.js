@@ -23,5 +23,5 @@ if(!isDev) {
 }
 
 app.listen(3333, () => {
-	console.log('server run on 3333');
+	console.log('server run on http://localhost:3333');
 })
