@@ -16,4 +16,3 @@ export default (stores, routerContext, url) => (
 )
 
 export { createStoreMap }
-

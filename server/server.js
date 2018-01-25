@@ -3,6 +3,7 @@ const ReactSSR = require('react-dom/server')
 const favicon = require('serve-favicon')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const serverRender = require('./util/server-render')
 const fs = require('fs')
 const path = require('path')
 
@@ -28,17 +29,21 @@ app.use('/api', require('./util/proxy'))
 app.use(favicon(path.join(__dirname, '../favicon.ico')))
 
 if(!isDev) {
-	const template = fs.readFileSync(path.join(__dirname, '../dist/index.html'), 'utf8')
-	const serverEntry = require('../dist/server-entry').default
+	const template = fs.readFileSync(path.join(__dirname, '../dist/server.ejs'), 'utf8')
+	const serverEntry = require('../dist/server-entry')
 	app.use('/public', express.static(path.join(__dirname, '../dist')))
-	app.get('*', (req, res)=> {
-		let appString = ReactSSR.renderToString(serverEntry)
-		res.send(template.replace('<!-- app -->', appString))
+	app.get('*', (req, res, next)=> {
+    serverRender(serverEntry, template, req, res).catch(next)
 	})
 }else {
 	const devStatic = require('./util/dev-static')
 	devStatic(app)
 }
+
+app.use((err, req, res, next) => {
+  console.log(err)
+  res.status(500).send(err)
+})
 
 app.listen(3333, () => {
 	console.log('server run on http://localhost:3333');
