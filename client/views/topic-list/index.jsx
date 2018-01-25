@@ -5,6 +5,7 @@ import {
 } from 'mobx-react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
+import Button from 'material-ui/Button'
 import { AppState } from '../../store/app-state'
 
 
@@ -54,6 +55,7 @@ export default class TopicList extends React.Component {
           <title>this is title test</title>
           <meta name="description" content="this is content.." />
         </Helmet>
+        <Button raised color="primary">this is button..</Button>
         <input type="text" onChange={this.changeName} />
         <input type="text" onChange={this.changeColor} />
         <button onClick={this.incrementFunc} >increment </button>
