@@ -6,7 +6,7 @@ import { JssProvider } from 'react-jss'
 import { MuiThemeProvider } from 'material-ui/styles'
 
 import App from './views/App'
-import { createStoreMap } from './store/store'
+import { createStoreMap } from './store'
 
 // export default <App />
 useStaticRendering(true)

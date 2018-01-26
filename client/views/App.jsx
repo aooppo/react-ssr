@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import Routes from '../config/router'
+import AppBar from './layout/app-bar'
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -9,11 +9,7 @@ export default class App extends React.Component {
 
   render() {
     return [
-      <div key="index">
-        <Link to="/detail"> detail page </Link>
-        <br />
-        <Link to="/list"> list page </Link>
-      </div>,
+      <AppBar key="appbar" />,
       <Routes key="routes" />,
 
     ]
