@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import Container from '../layout/container'
 /* eslint-disable */
 export default class TestApi extends React.Component {
   getTopics() {
@@ -30,11 +31,11 @@ export default class TestApi extends React.Component {
   }
   render() {
     return (
-      <div>
+      <Container>
         <button onClick={this.getTopics}>Topics</button>
         <button onClick={this.login}> Login</button>
         <button onClick={this.markAll}> markAll</button>
-      </div>
+      </Container>
       )
   }
 }

@@ -26,17 +26,24 @@ const HomeIcon = props => (
 )
 
 class MainAppBar extends React.Component {
+  static contextTypes = {
+    router: PropTypes.object,
+  }
+
   constructor(props) {
     super(props)
     this.onHomeIconClick = this.onHomeIconClick.bind(this)
     this.createButtonClick = this.createButtonClick.bind(this)
     this.loginButtonClick = this.loginButtonClick.bind(this)
   }
-  /* eslint-disable*/
+
   onHomeIconClick() {
-
+    this.context.router.history.push({
+      pathname: '/index',
+      search: '?tab=all',
+    })
   }
-
+  /* eslint-disable*/
   createButtonClick() {
 
   }

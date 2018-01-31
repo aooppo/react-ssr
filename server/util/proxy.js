@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
   const path = req.path
   const user = req.session.user || {}
   const needAccessToken = req.query.needAccessToken
-
+  console.log(needAccessToken, user.accessToken)
   if (needAccessToken && !user.accessToken) {
     res.status(401).send({
       success: false,
@@ -22,10 +22,10 @@ module.exports = (req, res, next) => {
   })
   if(query.needAccessToken) delete query.needAccessToken
 
-
+  console.log(req.method)
   axios(`${baseUrl}${path}`, {
     method: req.method,
-    params: query,
+    params: req.query,
     data: querystring.stringify( Object.assign({}, req.body, {
       accesstoken: (needAccessToken && req.method === 'POST') ? user.accessToken : ''
     })),
@@ -34,6 +34,7 @@ module.exports = (req, res, next) => {
     }
   }).then(resp => {
     if (resp.status === 200) {
+      console.log('prxy ... > '+resp.data)
       res.send(resp.data)
     }else {
       res.status(resp.status).send(resp.data)

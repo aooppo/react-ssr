@@ -8,7 +8,7 @@ import {
 } from 'mobx-react'
 
 import { withStyles } from 'material-ui/styles'
-// import Paper from 'material-ui/Paper'
+import Paper from 'material-ui/Paper'
 // import Button from 'material-ui/Button'
 // import IconReply from 'material-ui-icons/Reply'
 import { CircularProgress } from 'material-ui/Progress'
@@ -16,12 +16,12 @@ import { CircularProgress } from 'material-ui/Progress'
 // import SimpleMDE from '../../components/simple-mde'
 
 import Container from '../layout/container'
-
+import Reply from './reply'
 import { TopicStore } from '../../store/topic-store'
 import { topicDetailStyle } from './styles'
 
 // import Reply from './reply'
-// import formatDate from '../../util/date-format'
+import formatDate from '../../util/date-format'
 
 @inject(stores => {
   return {
@@ -125,6 +125,19 @@ class TopicDetail extends React.Component {
             <p dangerouslySetInnerHTML={{ __html: marked(topic.content) }} />
           </section>
         </Container>
+
+        <Paper elevation={4} className={classes.replies}>
+          <header className={classes.replyHeader}>
+            <span>{`${topic.reply_count} 回复`}</span>
+            <span>{`最新回复 ${formatDate(topic.last_reply_at, 'yy年m月dd日')}`}</span>
+          </header>
+          <section>
+            {
+              topic.replies.map(reply => <Reply reply={reply} key={reply.id} />)
+            }
+          </section>
+        </Paper>
+
       </div>
     )
   }
