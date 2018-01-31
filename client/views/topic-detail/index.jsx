@@ -109,9 +109,9 @@ class TopicDetail extends React.Component {
         </Container>
       )
     }
-    const createdReplies = topic.createdReplies
+    // const createdReplies = topic.createdReplies
     // const user = this.props.appState.user
-    console.log(createdReplies) // eslint-disable-line
+    // console.log(createdReplies) // eslint-disable-line
     return (
       <div>
         <Container>
