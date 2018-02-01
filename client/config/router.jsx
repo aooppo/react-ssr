@@ -7,6 +7,7 @@ import {
 import TopicList from '../views/topic-list/index'
 import TopicDetail from '../views/topic-detail/index'
 import TestApi from '../views/test/api-test'
+import User from '../views/user'
 
 export default () => [
   <Route path="/" render={() => <Redirect to="/list" />} exact key="frist" />,
@@ -14,4 +15,5 @@ export default () => [
   <Route path="/index" component={TopicList} key="index" />,
   <Route path="/detail/:id" component={TopicDetail} key="detail" />,
   <Route path="/test" component={TestApi} key="test" />,
+  <Route path="/login" component={User} key="login" />,
 ]

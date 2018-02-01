@@ -47,11 +47,13 @@ class MainAppBar extends React.Component {
   createButtonClick() {
 
   }
-
-  loginButtonClick() {
-
-  }
   /* eslint-enable  */
+  loginButtonClick() {
+    this.context.router.history.push({
+      pathname: '/login',
+      // search: '?tab=all',
+    })
+  }
 
   render() {
     const { classes } = this.props
