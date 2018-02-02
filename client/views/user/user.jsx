@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// import {
-//   inject,
-//   observer,
-// } from 'mobx-react'
+import {
+  inject,
+  observer,
+} from 'mobx-react'
 
 import Avatar from 'material-ui/Avatar'
 import { withStyles } from 'material-ui/styles'
@@ -13,6 +13,11 @@ import UserIcon from 'material-ui-icons/AccountCircle'
 import Container from '../layout/container'
 import userStyles from './styles/user-style'
 
+@inject(stores => {
+  return {
+    user: stores.appState.user,
+  }
+}) @observer
 class User extends React.Component {
   componentDidMount() {
     // do someting here
@@ -39,6 +44,7 @@ class User extends React.Component {
     )
   }
 }
+
 User.wrappedComponent.propTypes = {
   user: PropTypes.object.isRequired,
 }
