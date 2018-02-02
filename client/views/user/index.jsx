@@ -16,12 +16,13 @@ import { withStyles } from 'material-ui/styles'
 import UserWrapper from './user'
 import loginStyles from './styles/login-style'
 
-@inject(stores => {
-  return {
-    appState: stores.appState,
-    user: stores.appState.user,
-  }
-}) @observer
+// @inject(stores => {
+//   return {
+//     appState: stores.appState,
+//     user: stores.appState.user,
+//   }
+// })
+// @observer
 class UserLogin extends React.Component {
   static contextTypes = {
     router: PropTypes.object,
@@ -55,6 +56,7 @@ class UserLogin extends React.Component {
     })
     return this.props.appState.login(this.state.accesstoken)
       .catch(msg => {
+        console.log(msg) //eslint-disable-line
         this.props.appState.notify({ message: msg })
       })
   }
@@ -109,4 +111,10 @@ UserLogin.propTypes = {
   location: PropTypes.object.isRequired,
 }
 
-export default withStyles(loginStyles)(UserLogin)
+// export default withStyles(loginStyles)(UserLogin)
+export default withStyles(loginStyles)(inject((stores) => {
+  return {
+    appState: stores.appState,
+    user: stores.appState.user,
+  }
+})(observer(UserLogin)))
