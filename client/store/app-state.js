@@ -35,7 +35,7 @@ export default class AppState {
           this.user.isLogin = true
           resolve()
         } else {
-          reject(resp.data.msg)
+          reject(resp.data.data)
         }
       }).catch((err) => {
         if (err.response) {
