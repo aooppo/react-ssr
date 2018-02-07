@@ -25,6 +25,12 @@ export default class AppState {
 
   @observable activeNotifications = []
 
+  init({ user }) {
+    if (user) {
+      this.user = user
+    }
+  }
+
   @action login(accesstoken) {
     return new Promise((resolve, reject) => {
       axios.post('/api/user/login', {
@@ -59,6 +65,50 @@ export default class AppState {
     this.activeNotifications.splice(this.activeNotifications.indexOf(notify), 1)
     this.notifications.push(notify)
   }
+
+  @action getUserDetail() {
+    this.user.detail.syncing = true
+    return new Promise((resolve, reject) => {
+      axios.get(`/api/user/${this.user.info.loginname}`)
+        .then(resp => {
+          if (resp.status === 200 && resp.data.success) {
+            this.user.detail.recent_replies = resp.data.data.recent_replies
+            this.user.detail.recent_topics = resp.data.data.recent_topics
+            resolve()
+          } else {
+            reject(resp.data.msg)
+            this.notify({ message: resp.data.msg })
+          }
+          this.user.detail.syncing = false
+        }).catch(err => {
+          reject(err.message)
+          this.notify({ message: err.msg })
+          this.user.detail.syncing = false
+        })
+    })
+  }
+
+  @action getUserCollection() {
+    this.user.collections.syncing = true
+    return new Promise((resolve, reject) => {
+      axios.get(`/api/topic_collect/${this.user.info.loginname}`)
+        .then(resp => {
+          if (resp.status === 200 && resp.data.success) {
+            this.user.collections.list = resp.data.data
+            resolve()
+          } else {
+            reject(resp.data.msg)
+            this.notify({ message: resp.data.msg })
+          }
+          this.user.collections.syncing = false
+        }).catch(err => {
+          reject(err.message)
+          this.notify({ message: err.msg })
+          this.user.collections.syncing = false
+        })
+    })
+  }
+
 
   toJson() {
     return {

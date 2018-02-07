@@ -4,9 +4,9 @@ import {
   inject,
   observer,
 } from 'mobx-react'
-// import {
-//   Redirect,
-// } from 'react-router-dom'
+import {
+  Redirect,
+} from 'react-router-dom'
 import queryString from 'query-string'
 
 import TextField from 'material-ui/TextField'
@@ -16,13 +16,13 @@ import { withStyles } from 'material-ui/styles'
 import UserWrapper from './user'
 import loginStyles from './styles/login-style'
 
-// @inject(stores => {
-//   return {
-//     appState: stores.appState,
-//     user: stores.appState.user,
-//   }
-// })
-// @observer
+@inject(stores => {
+  return {
+    appState: stores.appState,
+    user: stores.appState.user,
+  }
+})
+@observer
 class UserLogin extends React.Component {
   static contextTypes = {
     router: PropTypes.object,
@@ -38,11 +38,11 @@ class UserLogin extends React.Component {
     this.handleInput = this.handleInput.bind(this)
   }
 
-  componentWillMount() {
-    if (this.props.user.isLogin) {
-      this.context.router.history.replace('/user/info')
-    }
-  }
+  // componentWillMount() {
+  //   if (this.props.user.isLogin) {
+  //     this.context.router.history.replace('/user/info')
+  //   }
+  // }
 
   getFrom(location) {
     location = location || this.props.location
@@ -62,7 +62,6 @@ class UserLogin extends React.Component {
     })
     return this.props.appState.login(this.state.accesstoken)
       .catch(msg => {
-        console.log(msg) //eslint-disable-line
         this.props.appState.notify({ message: msg.error_msg })
       })
   }
@@ -75,14 +74,13 @@ class UserLogin extends React.Component {
 
   render() {
     const classes = this.props.classes
-    // const isLogin = this.props.user.isLogin
-    // const from = this.getFrom()
-
-    // if (isLogin) {
-    //   return (
-    //     <Redirect to={from} />
-    //   )
-    // }
+    const isLogin = this.props.user.isLogin
+    const from = this.getFrom()
+    if (isLogin) {
+      return (
+        <Redirect to={from} />
+      )
+    }
 
     return (
       <UserWrapper>
@@ -112,15 +110,18 @@ class UserLogin extends React.Component {
 
 UserLogin.propTypes = {
   classes: PropTypes.object.isRequired,
-  appState: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
 }
 
-// export default withStyles(loginStyles)(UserLogin)
-export default withStyles(loginStyles)(inject((stores) => {
-  return {
-    appState: stores.appState,
-    user: stores.appState.user,
-  }
-})(observer(UserLogin)))
+UserLogin.wrappedComponent.propTypes = {
+  appState: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+}
+
+export default withStyles(loginStyles)(UserLogin)
+// export default withStyles(loginStyles)(inject((stores) => {
+//   return {
+//     appState: stores.appState,
+//     user: stores.appState.user,
+//   }
+// })(observer(UserLogin)))

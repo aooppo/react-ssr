@@ -1,6 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import {
+  inject,
+  observer,
+} from 'mobx-react'
 
 import AppBar from 'material-ui/AppBar'
 import ToolBar from 'material-ui/Toolbar'
@@ -25,6 +29,11 @@ const HomeIcon = props => (
   </SvgIcon>
 )
 
+@inject((stores) => {
+  return {
+    user: stores.appState.user,
+  }
+}) @observer
 class MainAppBar extends React.Component {
   static contextTypes = {
     router: PropTypes.object,
@@ -56,7 +65,11 @@ class MainAppBar extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const {
+      classes,
+      user,
+    } = this.props
+
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -67,11 +80,17 @@ class MainAppBar extends React.Component {
             <Typography type="title" color="inherit" className={classes.flex}>
               JNode
             </Typography>
-            <Button raised color="secondary" onClick={this.createButtonClick}>
-              新建话题
-            </Button>
+            {
+              user.isLogin ?
+                <Button raised color="secondary" onClick={this.goToCreate}>
+                  新建话题
+                </Button> :
+                null
+            }
             <Button color="inherit" onClick={this.loginButtonClick}>
-              登陆
+              {
+                user.isLogin ? user.info.loginname : '登录'
+              }
             </Button>
           </ToolBar>
         </AppBar>
@@ -79,6 +98,11 @@ class MainAppBar extends React.Component {
     )
   }
 }
+
+MainAppBar.wrappedComponent.propTypes = {
+  user: PropTypes.object.isRequired,
+}
+
 
 MainAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
