@@ -145,7 +145,7 @@ export class TopicStore {
   }
 
   @action getTopicDetail(id) {
-    console.log('get topic id:', id) // eslint-disable-line
+    // console.log('get topic id:', id) // eslint-disable-line
     return new Promise((resolve, reject) => {
       if (this.detailsMap[id]) {
         resolve(this.detailsMap[id])

@@ -9,18 +9,18 @@ import {
 
 import { withStyles } from 'material-ui/styles'
 import Paper from 'material-ui/Paper'
-// import Button from 'material-ui/Button'
-// import IconReply from 'material-ui-icons/Reply'
+import Button from 'material-ui/Button'
+import IconReply from 'material-ui-icons/Reply'
 import { CircularProgress } from 'material-ui/Progress'
 
-// import SimpleMDE from '../../components/simple-mde'
+import SimpleMDE from '../../components/simple-mde'
 
 import Container from '../layout/container'
-import Reply from './reply'
+
 import { TopicStore } from '../../store/topic-store'
 import { topicDetailStyle } from './styles'
 
-// import Reply from './reply'
+import Reply from './reply'
 import formatDate from '../../util/date-format'
 
 @inject(stores => {
@@ -79,7 +79,7 @@ class TopicDetail extends React.Component {
   }
 
   goToLogin() {
-    this.context.router.history.push('/user/login')
+    this.context.router.history.push('/login')
   }
 
   handleReply() {
@@ -109,8 +109,8 @@ class TopicDetail extends React.Component {
         </Container>
       )
     }
-    // const createdReplies = topic.createdReplies
-    // const user = this.props.appState.user
+    const createdReplies = topic.createdReplies
+    const user = this.props.appState.user
     // console.log(createdReplies) // eslint-disable-line
     return (
       <div>
@@ -126,25 +126,79 @@ class TopicDetail extends React.Component {
           </section>
         </Container>
 
+        {
+          createdReplies && createdReplies.length > 0 ?
+            (
+              <Paper elevation={4} className={classes.replies}>
+                <header className={classes.replyHeader}>
+                  <span>{' '}</span>
+                  <span>{'我的最新回复'}</span>
+                </header>
+                {
+                  createdReplies.map(reply => {
+                    return (
+                      <Reply
+                        reply={Object.assign({}, reply, {
+                          author: {
+                            avatar_url: user.info.avatar_url,
+                            loginname: user.info.loginName,
+                          },
+                        })}
+                        key={reply.id}
+                      />
+                    )
+                  })
+                }
+              </Paper>
+            ) :
+            null
+        }
+
         <Paper elevation={4} className={classes.replies}>
           <header className={classes.replyHeader}>
             <span>{`${topic.reply_count} 回复`}</span>
             <span>{`最新回复 ${formatDate(topic.last_reply_at, 'yy年m月dd日')}`}</span>
           </header>
+          {
+            (this.state.showEditor && user.isLogin) &&
+            <section className={classes.replyEditor}>
+              <SimpleMDE
+                onChange={this.handleNewReplyChange}
+                value={this.state.newReply}
+                options={{
+                  toolbar: false,
+                  autoFocus: true,
+                  spellChecker: false,
+                  placeholder: '添加你的精彩回复',
+                }}
+              />
+              <Button fab color="primary" onClick={this.handleReply} className={classes.replyButton}>
+                <IconReply />
+              </Button>
+            </section>
+          }
+          {
+            !user.isLogin ?
+              (
+                <section className={classes.notLoginButton}>
+                  <Button raised color="primary" onClick={this.goToLogin}>登录进行回复</Button>
+                </section>
+              ) :
+              null
+          }
           <section>
             {
               topic.replies.map(reply => <Reply reply={reply} key={reply.id} />)
             }
           </section>
         </Paper>
-
       </div>
     )
   }
 }
 
 TopicDetail.wrappedComponent.propTypes = {
-  appState: PropTypes.object.isRequired, // eslint-disable-line
+  appState: PropTypes.object.isRequired,
   topicStore: PropTypes.instanceOf(TopicStore).isRequired,
 }
 

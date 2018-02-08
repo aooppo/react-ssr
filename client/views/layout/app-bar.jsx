@@ -78,7 +78,7 @@ class MainAppBar extends React.Component {
               <HomeIcon color="action" />
             </IconButton>
             <Typography type="title" color="inherit" className={classes.flex}>
-              React Node
+              React js Node
             </Typography>
             {
               user.isLogin ?

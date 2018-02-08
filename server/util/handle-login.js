@@ -8,7 +8,6 @@ router.post('/login', (req, res, next) => {
     accesstoken: req.body.accesstoken
   })
     .then(resp => {
-      console.log(`${JSON.stringify(resp.data)}`)
       if (resp.status === 200 && resp.data.success) {
         req.session.user = {
           accessToken: req.body.accesstoken,
