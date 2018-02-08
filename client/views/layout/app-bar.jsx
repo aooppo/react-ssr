@@ -74,11 +74,11 @@ class MainAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="fixed">
           <ToolBar>
-            <IconButton color="secondary" onClick={this.onHomeIconClick}>
+            <IconButton color="primary" onClick={this.onHomeIconClick}>
               <HomeIcon color="action" />
             </IconButton>
             <Typography type="title" color="inherit" className={classes.flex}>
-              JNode
+              React Node
             </Typography>
             {
               user.isLogin ?
