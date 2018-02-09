@@ -67,8 +67,9 @@ class TopicDetail extends React.Component {
     const id = this.props.match.params.id
     return this.props.topicStore.getTopicDetail(id).then(() => {
       return true
-    }).catch((err) => {
-      throw err
+    }).catch((err) => { // eslint-disable-line
+      console.log('throw err', id) // eslint-disable-line
+      // throw err
     })
   }
 
@@ -167,7 +168,7 @@ class TopicDetail extends React.Component {
                 value={this.state.newReply}
                 options={{
                   toolbar: false,
-                  autoFocus: true,
+                  autoFocus: false,
                   spellChecker: false,
                   placeholder: '添加你的精彩回复',
                 }}
