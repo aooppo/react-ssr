@@ -13,7 +13,8 @@ import Button from 'material-ui/Button'
 import IconReply from 'material-ui-icons/Reply'
 import { CircularProgress } from 'material-ui/Progress'
 
-import SimpleMDE from '../../components/simple-mde'
+// import SimpleMDE from '../../components/simple-mde'
+import SimpleMDE from 'react-simplemde-editor'
 
 import Container from '../layout/container'
 
@@ -112,6 +113,7 @@ class TopicDetail extends React.Component {
     }
     const createdReplies = topic.createdReplies
     const user = this.props.appState.user
+
     // console.log(createdReplies) // eslint-disable-line
     return (
       <div>
@@ -142,7 +144,7 @@ class TopicDetail extends React.Component {
                         reply={Object.assign({}, reply, {
                           author: {
                             avatar_url: user.info.avatar_url,
-                            loginname: user.info.loginName,
+                            loginname: user.info.loginname,
                           },
                         })}
                         key={reply.id}
@@ -173,9 +175,11 @@ class TopicDetail extends React.Component {
                   placeholder: '添加你的精彩回复',
                 }}
               />
+
               <Button fab color="primary" onClick={this.handleReply} className={classes.replyButton}>
                 <IconReply />
               </Button>
+
             </section>
           }
           {

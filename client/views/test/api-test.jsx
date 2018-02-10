@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import Container from '../layout/container'
+
+const token = ''
 /* eslint-disable */
 export default class TestApi extends React.Component {
   getTopics() {
@@ -13,7 +15,7 @@ export default class TestApi extends React.Component {
   }
   login() {
     axios.post('/api/user/login', {
-      accesstoken: 'ef35af2e-95b4-4062-badc-419d3b7471c4'
+      accesstoken: token
     }).then(resp => {
       console.log(resp)
     }).catch(err => {
@@ -22,7 +24,7 @@ export default class TestApi extends React.Component {
   }
   markAll() {
     axios.post('/api/message/mark_all?needAccessToken=true', {
-      accesstoken: 'ef35af2e-95b4-4062-badc-419d3b7471c4'
+      accesstoken: token
     }).then(resp => {
       console.log(resp.data)
     }).catch(err => {

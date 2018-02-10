@@ -12,10 +12,15 @@ import {
 
 import {
   topicSchema,
+  replySchema,
 } from '../util/variable-define'
 
 const createTopic = (data) => {
   return Object.assign({}, topicSchema, data)
+}
+
+const createReply = (reply) => {
+  return Object.assign({}, replySchema, reply)
 }
 
 export class Topic {
@@ -28,16 +33,18 @@ export class Topic {
   @action doReply(content) {
     return new Promise((resolve, reject) => {
       post(`/topic/${this.id}/replies`, {
+        needAccessToken: true,
+      }, {
         content,
       })
         .then(data => {
           debugger // eslint-disable-line
           if (data.success) {
-            this.createdReplies.push({
-              create_at: Date.now(),
+            this.createdReplies.push(createReply({
               id: data.reply_id,
               content,
-            })
+              create_at: Date.now(),
+            }))
             resolve({
               replyId: data.reply_id,
               content,
