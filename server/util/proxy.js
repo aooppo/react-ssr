@@ -53,6 +53,7 @@ module.exports = function (req, res, next) {
   // const path = req.path
   const user = req.session.user || {}
   const needAccessToken = req.query.needAccessToken
+  console.log(needAccessToken, user)
   if (needAccessToken && !user.accessToken) {
     res.status(401).send({
       success: false,

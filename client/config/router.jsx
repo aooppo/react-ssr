@@ -15,6 +15,7 @@ import TopicDetail from '../views/topic-detail/index'
 import TestApi from '../views/test/api-test'
 import User from '../views/user'
 import Infos from '../views/user/infos'
+import CreateTopic from '../views/create-topic/index'
 
 const PrivateRoute = ({ isLogin, component: Component, ...rest }) => {
   // debugger // eslint-disable-line
@@ -59,4 +60,5 @@ export default () => [
   <Route path="/test" component={TestApi} key="test" />,
   <Route path="/login" component={User} key="login" />,
   <InjectedPrivateRoute path="/user/info" component={Infos} key="userInfo" />,
+  <InjectedPrivateRoute path="/topic/create" component={CreateTopic} key="topicCreate" />,
 ]

@@ -52,11 +52,13 @@ class MainAppBar extends React.Component {
       search: '?tab=all',
     })
   }
-  /* eslint-disable*/
-  createButtonClick() {
 
+  createButtonClick() {
+    this.context.router.history.push({
+      pathname: '/topic/create',
+    })
   }
-  /* eslint-enable  */
+
   loginButtonClick() {
     this.context.router.history.push({
       pathname: '/login',
@@ -82,7 +84,7 @@ class MainAppBar extends React.Component {
             </Typography>
             {
               user.isLogin ?
-                <Button raised color="secondary" onClick={this.goToCreate}>
+                <Button raised color="secondary" onClick={this.createButtonClick}>
                   新建话题
                 </Button> :
                 null

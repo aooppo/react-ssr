@@ -65,9 +65,10 @@ export class TopicStore {
   @observable tab = undefined
 
   constructor(
-    { syncing = false, topics = [], tab = null, details = [] } = {},
+    { syncing = false, topics = [], tab = null, details = [], createdTopics = [] } = {},
   ) {
     this.syncing = syncing
+    this.createdTopics = createdTopics
     this.topics = topics.map(topic => new Topic(createTopic(topic)))
     this.details = details.map(detail => new Topic(createTopic(detail)))
     this.tab = tab
@@ -124,7 +125,11 @@ export class TopicStore {
   @action createTopic(title, tab, content) {
     return new Promise((resolve, reject) => {
       post('/topics', {
-        title, tab, content,
+        needAccessToken: true,
+      }, {
+        title,
+        tab,
+        content,
       })
         .then(data => {
           if (data.success) {
