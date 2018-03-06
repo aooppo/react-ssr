@@ -25,7 +25,6 @@ module.exports = (bundle, template, req, res) => {
     const routerContext = {}
     const stores = createStoreMap()
     if (user) {
-      console.log('login user >>>> ', user)
       stores.appState.user.isLogin = true
       stores.appState.user.info = user
     }
