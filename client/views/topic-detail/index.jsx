@@ -48,7 +48,6 @@ class TopicDetail extends React.Component {
 
   componentDidMount() {
     const id = this.props.match.params.id
-    console.log('component did mount id:', id) // eslint-disable-line
     this.props.topicStore.getTopicDetail(id).catch(err => {
       console.log('detail did mount error:', err) // eslint-disable-line
     })

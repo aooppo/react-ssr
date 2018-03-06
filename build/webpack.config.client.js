@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HTMLPlugin = require('html-webpack-plugin')
 const webpackMerge = require('webpack-merge')
+const NameAllModulesPlugin = require('name-all-modules-plugin')
 const baseConfig = require('./webpack.base.js')
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -47,5 +48,44 @@ if (isDev) {
     }
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
+} else {
+  config.entry = {
+    app: path.join(__dirname, '../client/app.js'),
+    vendor: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      'mobx',
+      'mobx-react',
+      'axios',
+      'query-string',
+      'dateformat',
+      'marked'
+    ]
+  }
+  config.output.filename = '[name].[chunkhash].js'
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'mainfest',
+      minChunks: Infinity
+    }),
+    new webpack.NamedModulesPlugin(),
+    new NameAllModulesPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
+    new webpack.NamedChunksPlugin((chunk) => {
+      if (chunk.name) {
+        return chunk.name
+      }
+      return chunk.mapModules(m => path.relative(m.context, m.request)).join('_')
+    })
+  )
 }
 module.exports = config
