@@ -50,11 +50,12 @@ export default class TopicList extends React.Component {
   }
 
   asyncBootstrap() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.props.appState.count = 3
-        resolve(true)
-      })
+    const query = queryString.parse(this.props.location.search)
+    const { tab } = query;
+    return this.props.topicStore.fetchTopics(tab || 'all').then(() => {
+      return true
+    }).catch(() => {
+      return false
     })
   }
 

@@ -21,9 +21,14 @@ module.exports = (bundle, template, req, res) => {
   return new Promise((resolve, reject) => {
     const createStoreMap = bundle.createStoreMap
     const createApp = bundle.default
-
+    const user = req.session.user
     const routerContext = {}
     const stores = createStoreMap()
+    if (user) {
+      console.log('login user >>>> ', user)
+      stores.appState.user.isLogin = true
+      stores.appState.user.info = user
+    }
     const theme = createMuiTheme({
       palette: {
         primary: colors.pink,

@@ -25,7 +25,7 @@ export default class AppState {
 
   @observable activeNotifications = []
 
-  init({ user }) {
+  init({ user } = {}) {
     if (user) {
       this.user = user
     }
@@ -69,7 +69,7 @@ export default class AppState {
   @action getUserDetail() {
     this.user.detail.syncing = true
     return new Promise((resolve, reject) => {
-      axios.get(`/api/user/${this.user.info.loginname}`)
+      axios.get(`/api/user/${this.user.info.loginName}`)
         .then(resp => {
           if (resp.status === 200 && resp.data.success) {
             this.user.detail.recent_replies = resp.data.data.recent_replies
@@ -91,7 +91,7 @@ export default class AppState {
   @action getUserCollection() {
     this.user.collections.syncing = true
     return new Promise((resolve, reject) => {
-      axios.get(`/api/topic_collect/${this.user.info.loginname}`)
+      axios.get(`/api/topic_collect/${this.user.info.loginName}`)
         .then(resp => {
           if (resp.status === 200 && resp.data.success) {
             this.user.collections.list = resp.data.data

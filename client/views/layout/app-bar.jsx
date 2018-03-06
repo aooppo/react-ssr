@@ -71,7 +71,6 @@ class MainAppBar extends React.Component {
       classes,
       user,
     } = this.props
-
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -91,7 +90,7 @@ class MainAppBar extends React.Component {
             }
             <Button color="inherit" onClick={this.loginButtonClick}>
               {
-                user.isLogin ? user.info.loginname : '登录'
+                user.isLogin ? user.info.loginName : '登录'
               }
             </Button>
           </ToolBar>

@@ -17,7 +17,7 @@ router.post('/login', (req, res, next) => {
         }
         res.json({
           success: true,
-          data: resp.data
+          data: req.session.user
         })
       }
     })
